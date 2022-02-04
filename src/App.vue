@@ -1,26 +1,37 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <ul>
+    <li v-for="todo in allTodos" :key="todo.id">{{ todo.name }}</li>
+    <input v-model="firstName" placeholder="firstName" type="text" />
+    <input v-model="lastName" placeholder="lastName" type="text" />
+    <input v-model="age" placeholder="age" type="number" />
+    <input v-model="country" placeholder="country" type="text" />
+  </ul>
+
+  <button @click="addName">click</button>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { mapGetters, mapActions } from "vuex";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+  data() {
+    return {
+      firstName: "ali",
+      lastName: "samavi",
+      age: "29",
+      country: "iran",
+    };
+  },
+  methods: {
+    ...mapActions(["addTodos"]),
+    addName(name) {
+      const factoryName = { name, id: Math.random() };
+      this.addTodos(factoryName);
+    },
+  },
+  computed: mapGetters(["allTodos"]),
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>
